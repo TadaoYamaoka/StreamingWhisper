@@ -58,6 +58,8 @@ def recieve():
                     audio = np.empty(SAMPLE_RATE * INTERVAL + BUFFER_SIZE, dtype=np.float32)
                     audio[:n-m] = audio_prev[m:n]
                     n = n-m
+        except Exception as e:
+            print(e)
         finally:
             cilent.close()
 
