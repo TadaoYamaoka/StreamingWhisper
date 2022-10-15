@@ -76,7 +76,8 @@ while True:
                 m = n * 4 // 5
                 vol = np.convolve(audio[m:n] ** 2, b, 'same')
                 m += vol.argmin()
-                q.put(audio[:m])
+                if m > 0:
+                    q.put(audio[:m])
 
                 audio_prev = audio
                 audio = np.empty(SAMPLE_RATE * INTERVAL + BUFFER_SIZE, dtype=np.float32)
