@@ -67,24 +67,19 @@ th_recieve.start()
 
 options = whisper.DecodingOptions()
 
-def recognize():
-    while True:
-        audio = q.get()
-        if (audio ** 2).max() > 0.001:
-            audio = whisper.pad_or_trim(audio)
+while True:
+    audio = q.get()
+    if (audio ** 2).max() > 0.001:
+        audio = whisper.pad_or_trim(audio)
 
-            # make log-Mel spectrogram and move to the same device as the model
-            mel = whisper.log_mel_spectrogram(audio).to(model.device)
+        # make log-Mel spectrogram and move to the same device as the model
+        mel = whisper.log_mel_spectrogram(audio).to(model.device)
 
-            # detect the spoken language
-            _, probs = model.detect_language(mel)
+        # detect the spoken language
+        _, probs = model.detect_language(mel)
 
-            # decode the audio
-            result = whisper.decode(model, mel, options)
+        # decode the audio
+        result = whisper.decode(model, mel, options)
 
-            # print the recognized text
-            print(f'{max(probs, key=probs.get)}: {result.text}')
-
-
-th_recognize = threading.Thread(target=recognize)
-th_recognize.start()
+        # print the recognized text
+        print(f'{max(probs, key=probs.get)}: {result.text}')
