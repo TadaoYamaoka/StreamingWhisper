@@ -47,7 +47,7 @@ def recognize():
             print(f'{max(probs, key=probs.get)}: {result.text}')
 
 
-th_recognize = threading.Thread(target=recognize)
+th_recognize = threading.Thread(target=recognize, daemon=True)
 th_recognize.start()
 
 # start listening
